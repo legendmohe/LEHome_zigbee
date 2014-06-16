@@ -56,7 +56,6 @@
 /*********************************************************************
  * INCLUDES
  */
-#include <stdio.h>
 #include "OSAL.h"
 #include "ZGlobals.h"
 #include "AF.h"
@@ -77,13 +76,19 @@
 #include "MT.h"
 #include "DHT11.h"
 
-
+#include "hal_adc.h"
+#include <stdio.h>
 /*********************************************************************
  * MACROS
  */
 #define H_PIN P0_4            //定义P0.4口为传感器的输入端
 #define G_PIN P0_5            //定义P0.5口为传感器的输入端
 
+#define HAL_ADC_DEC_064     0x00    /* Decimate by 64 : 8-bit resolution */
+#define HAL_ADC_DEC_128     0x10    /* Decimate by 128 : 10-bit resolution */
+#define HAL_ADC_DEC_256     0x20    /* Decimate by 256 : 12-bit resolution */
+#define HAL_ADC_DEC_512     0x30    /* Decimate by 512 : 14-bit resolution */
+#define HAL_ADC_DEC_BITS    0x30    /* Bits [5:4] */
 /*********************************************************************
  * CONSTANTS
  */
@@ -155,7 +160,10 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pckt );
 void SampleApp_Send_P2P_Message(void);
 void rxCB(uint8 port,uint8 event);
 
+uint16 ReadLightData( void );
 void SendSelfAddrToUART(void);
+static void GetIeeeAddr(uint8 * pIeeeAddr, uint8 *pStr);
+void PowerSaving(void);
 /*********************************************************************
  * NETWORK LAYER CALLBACKS
  */
@@ -280,6 +288,7 @@ uint16 SampleApp_ProcessEvent( uint8 task_id, uint16 events )
               || (SampleApp_NwkState == DEV_END_DEVICE) )
           {
             // Start sending the periodic message in a regular interval.
+            //PowerSaving();
             osal_start_timerEx( SampleApp_TaskID,
                               SAMPLEAPP_SEND_PERIODIC_MSG_EVT,
                               SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT );
@@ -391,11 +400,9 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
   switch ( pkt->clusterId )
   {
     case SAMPLEAPP_P2P_CLUSTERID:
-      #if defined(ZDO_COORDINATOR)      //协调器只 
+      #if defined(ZDO_COORDINATOR)
       {
-        byte str[15];
-        sprintf(str, "%x#%s", pkt->srcAddr.addr.shortAddr, pkt->cmd.Data);
-        HalUARTWrite(0, str, 14);
+        HalUARTWrite(0, pkt->cmd.Data, osal_strlen(pkt->cmd.Data));
         HalUARTWrite(0, "\n", 1);
       }
       #else
@@ -423,7 +430,7 @@ void SampleApp_MessageMSGCB( afIncomingMSGPacket_t *pkt )
  */
 void SampleApp_Send_P2P_Message( void )
 {
-  byte state[2], temp[3], humidity[3], light[2], strTemp[10];
+  byte state[2], temp[3], humidity[3], light[4], strTemp[29];
 
   DHT11();             //获取温湿度
 
@@ -435,21 +442,26 @@ void SampleApp_Send_P2P_Message( void )
   humidity[1] = shidu_ge+0x30;
   humidity[2] = '\0';
   
-  if(G_PIN == 1)
-  { 
-    MicroWait (10000);     // Wait 10ms
-    if(G_PIN == 1)    //当光敏电阻处于黑暗中时P0.5高电平
-    {
-      light[0] = 0x31;
-    }else
-    {
-      light[0] = 0x30;
-    }
-  }else
-  {
-    light[0] = 0x30;
-  }
-  light[1] = '\0';
+//  if(G_PIN == 1)
+//  { 
+//    MicroWait (10000);     // Wait 10ms
+//    if(G_PIN == 1)    //当光敏电阻处于黑暗中时P0.5高电平
+//    {
+//      light[0] = 0x31;
+//    }else
+//    {
+//      light[0] = 0x30;
+//    }
+//  }else
+//  {
+//    light[0] = 0x30;
+//  }
+//  light[1] = '\0';
+  
+  uint16 value;
+  osal_memset(light, 0, 4);
+  value = ReadLightData();
+  sprintf(light, "%03d", value);
   
   if(H_PIN == 1)
   { 
@@ -475,7 +487,13 @@ void SampleApp_Send_P2P_Message( void )
   osal_memcpy(&strTemp[5], "#", 1);
   osal_memcpy(&strTemp[6], state, 1);
   osal_memcpy(&strTemp[7], "#", 1);
-  osal_memcpy(&strTemp[8], light, 2);
+  osal_memcpy(&strTemp[8], light, 3);
+  osal_memcpy(&strTemp[11], "#", 1);
+  //发送IEEE地址
+  uint8 strIeeeAddr[17] = {0};
+  GetIeeeAddr(aExtendedAddress + Z_EXTADDR_LEN - 1, strIeeeAddr);
+  osal_memcpy(&strTemp[12], strIeeeAddr, 16);
+  strTemp[28] = '\0';
   
   //获得的温湿度通过串口输出到电脑显示
   //HalUARTWrite(0, strTemp, 9);
@@ -483,8 +501,8 @@ void SampleApp_Send_P2P_Message( void )
  
   if ( AF_DataRequest( &SampleApp_P2P_DstAddr, &SampleApp_epDesc,
                        SAMPLEAPP_P2P_CLUSTERID,
-                       9,
-                       strTemp,
+                       (byte)osal_strlen( strTemp ) + 1,
+                       (byte *)strTemp,
                        &SampleApp_TransID,
                        AF_DISCV_ROUTE,
                        AF_DEFAULT_RADIUS ) == afStatus_SUCCESS )
@@ -496,13 +514,65 @@ void SampleApp_Send_P2P_Message( void )
   }
 }
 
+/*********************************************************************
+*********************************************************************/
+
+uint16 ReadLightData( void )
+{
+  uint16 reading = 0;
+  
+  P0DIR &= ~0x20;  // 设置P0.5为输入方式
+  asm("NOP");asm("NOP");
+  
+  /* Clear ADC interrupt flag */
+  ADCIF = 0;
+  
+  ADCCON3 = (0x80 | HAL_ADC_DEC_064 | HAL_ADC_CHANNEL_5);
+  
+  /* Wait for the conversion to finish */
+  while ( !ADCIF );
+  
+  asm("NOP");asm("NOP");
+  
+  /* Read the result */
+  reading = ADCL;
+  reading |= (int16) (ADCH << 8);
+  reading >>= 8;
+  
+  return reading;
+}
+
 void SendSelfAddrToUART()
 {
-  byte str[11];
-  uint16 shortaddr = NLME_GetShortAddr(); 
-  sprintf(str, "addr:%x", shortaddr);
-  HalUARTWrite(0, str, 10);
+  uint8 strIeeeAddr[17] = {0};
+  GetIeeeAddr(aExtendedAddress + Z_EXTADDR_LEN - 1, strIeeeAddr);
+
+  HalUARTWrite(0, strIeeeAddr, osal_strlen(strIeeeAddr));
   HalUARTWrite(0, "\n", 1);
+}
+
+void GetIeeeAddr(uint8 * pIeeeAddr, uint8 *pStr)
+{
+  uint8 i;
+  uint8 *xad = pIeeeAddr;
+
+  for (i = 0; i < Z_EXTADDR_LEN*2; xad--)
+  {
+    uint8 ch;
+    ch = (*xad >> 4) & 0x0F;
+    *pStr++ = ch + (( ch < 10 ) ? '0' : '7');
+    i++;
+    ch = *xad & 0x0F;
+    *pStr++ = ch + (( ch < 10 ) ? '0' : '7');
+    i++;
+  }
+}
+
+void PowerSaving(void)
+{
+  NLME_SetPollRate(0);
+  NLME_SetQueuedPollRate(0);
+  NLME_SetPollRate(0);
 }
 /*********************************************************************
 *********************************************************************/

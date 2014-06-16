@@ -70,7 +70,7 @@ extern "C"
 #define SAMPLEAPP_P2P_CLUSTERID      4
   
 // Send Message Timeout
-#define SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT   1000     // Every 3 seconds
+#define SAMPLEAPP_SEND_PERIODIC_MSG_TIMEOUT   1500     // Every 3 seconds
 
 // Application Events (OSAL) - These are bit weighted definitions.
 #define SAMPLEAPP_SEND_PERIODIC_MSG_EVT       0x0001

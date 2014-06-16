@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                            /
-// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        20/May/2014  16:02:13 /
+// IAR C/C++ Compiler V8.10.3.10338/W32 for 8051        23/May/2014  15:13:37 /
 // Copyright 2004-2011 IAR Systems AB.                                        /
 //                                                                            /
 //    Core               =  plain                                             /
@@ -9,22 +9,16 @@
 //    Calling convention =  xdata reentrant                                   /
 //    Constant location  =  data_rom                                          /
 //    Dptr setup         =  1,16                                              /
-//    Source file        =  F:\baiduyundownload\第5章                         /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Components\hal\target\CC2530E /
-//                          B\hal_uart.c                                      /
-//    Command line       =  -f "F:\baiduyundownload\第5章                     /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wCoord.cf /
-//                          g" (-DCPU32MHZ -DROOT=__near_func                 /
+//    Source file        =  E:\emb_workspace\LEHome_zigbee\Components\hal\tar /
+//                          get\CC2530EB\hal_uart.c                           /
+//    Command line       =  -f E:\emb_workspace\LEHome_zigbee\Projects\zstack /
+//                          \Samples\SampleApp\CC2530DB\..\..\..\Tools\CC2530 /
+//                          DB\f8wCoord.cfg (-DCPU32MHZ -DROOT=__near_func    /
 //                          -DMAC_CFG_APP_PENDING_QUEUE=TRUE                  /
 //                          -DZDO_COORDINATOR -DRTR_NWK -DBLINK_LEDS) -f      /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\Tools\CC2530DB\f8wConfig.c /
-//                          fg" (-DSECURE=0 -DZG_SECURE_DYNAMIC=0             /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\Tools\CC2530DB\ /
+//                          f8wConfig.cfg (-DSECURE=0 -DZG_SECURE_DYNAMIC=0   /
 //                          -DREFLECTOR -DDEFAULT_CHANLIST=0x00000800         /
 //                          -DZDAPP_CONFIG_PAN_ID=0xFFF1                      /
 //                          -DNWK_START_DELAY=100 -DEXTENDED_JOINING_RANDOM_M /
@@ -44,122 +38,81 @@
 //                          "-DCONST=const __code" -DGENERIC=__generic        /
 //                          -DRFD_RCVC_ALWAYS_ON=FALSE -DPOLL_RATE=1000       /
 //                          -DQUEUED_POLL_RATE=100 -DRESPONSE_POLL_RATE=100)  /
-//                          -DREJOIN_POLL_RATE=440 "F:\baiduyundownload\第5章 /
-//                           zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStac /
-//                          k-CC2530-2.3.0-1.4.0\Components\hal\target\CC2530 /
-//                          EB\hal_uart.c" -D ZIGBEEPRO -D ZTOOL_P1 -D        /
-//                          xMT_TASK -D xMT_SYS_FUNC -D xMT_ZDO_FUNC -D       /
+//                          -DREJOIN_POLL_RATE=440 E:\emb_workspace\LEHome_zi /
+//                          gbee\Components\hal\target\CC2530EB\hal_uart.c    /
+//                          -D ZIGBEEPRO -D ZTOOL_P1 -D xMT_TASK -D           /
+//                          xMT_SYS_FUNC -D xMT_ZDO_FUNC -D                   /
 //                          LCD_SUPPORTED=DEBUG -lC                           /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\CoordinatorEB-Pro\List\" -lA        /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\CoordinatorEB-Pro\List\"            /
-//                          --diag_suppress Pe001,Pa010 -o                    /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\CoordinatorEB-Pro\Obj\" -e --debug  /
-//                          --core=plain --dptr=16,1 --data_model=large       /
-//                          --code_model=banked --calling_convention=xdata_re /
-//                          entrant --place_constants=data_rom                /
-//                          --nr_virtual_regs 16 -I                           /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\" -I "F:\baiduyundownload\第5章     /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\SOURCE\" -I                      /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\ZMAIN\TI2530DB\" -I        /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\MT\" -I   /
-//                          "F:\baiduyundownload\第5章                        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\HAL\INCLU /
-//                          DE\" -I "F:\baiduyundownload\第5章                /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\HAL\TARGE /
-//                          T\CC2530EB\" -I "F:\baiduyundownload\第5章        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\OSAL\MCU\ /
-//                          CCSOC\" -I "F:\baiduyundownload\第5章             /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\OSAL\INCL /
-//                          UDE\" -I "F:\baiduyundownload\第5章               /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\AF\ /
-//                          " -I "F:\baiduyundownload\第5章                   /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\NWK /
-//                          \" -I "F:\baiduyundownload\第5章                  /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\SEC /
-//                          \" -I "F:\baiduyundownload\第5章                  /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\SAP /
-//                          I\" -I "F:\baiduyundownload\第5章                 /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\SYS /
-//                          \" -I "F:\baiduyundownload\第5章                  /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\STACK\ZDO /
-//                          \" -I "F:\baiduyundownload\第5章                  /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\ZMAC\F8W\ /
-//                          " -I "F:\baiduyundownload\第5章                   /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\ZMAC\"    /
-//                          -I "F:\baiduyundownload\第5章                     /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\SERVICES\ /
-//                          SADDR\" -I "F:\baiduyundownload\第5章             /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\SERVICES\ /
-//                          SDATA\" -I "F:\baiduyundownload\第5章             /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\MAC\INCLU /
-//                          DE\" -I "F:\baiduyundownload\第5章                /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\MAC\HIGH_ /
-//                          LEVEL\" -I "F:\baiduyundownload\第5章             /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\MAC\LOW_L /
-//                          EVEL\srf04\" -I "F:\baiduyundownload\第5章        /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\..\..\..\..\..\COMPONENTS\MAC\LOW_L /
-//                          EVEL\srf04\SINGLE_CHIP\" -Ohz                     /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\CoordinatorEB-Pro\List\  /
+//                          -lA E:\emb_workspace\LEHome_zigbee\Projects\zstac /
+//                          k\Samples\SampleApp\CC2530DB\CoordinatorEB-Pro\Li /
+//                          st\ --diag_suppress Pe001,Pa010 -o                /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\CoordinatorEB-Pro\Obj\   /
+//                          -e --debug --core=plain --dptr=16,1               /
+//                          --data_model=large --code_model=banked            /
+//                          --calling_convention=xdata_reentrant              /
+//                          --place_constants=data_rom --nr_virtual_regs 16   /
+//                          -I E:\emb_workspace\LEHome_zigbee\Projects\zstack /
+//                          \Samples\SampleApp\CC2530DB\ -I                   /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\SOURCE\ -I            /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\ZMAIN\TI2530DB\ /
+//                           -I E:\emb_workspace\LEHome_zigbee\Projects\zstac /
+//                          k\Samples\SampleApp\CC2530DB\..\..\..\..\..\COMPO /
+//                          NENTS\MT\ -I E:\emb_workspace\LEHome_zigbee\Proje /
+//                          cts\zstack\Samples\SampleApp\CC2530DB\..\..\..\.. /
+//                          \..\COMPONENTS\HAL\INCLUDE\ -I                    /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\HAL\TARGET\CC2530EB\ -I                         /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\OSAL\MCU\CCSOC\ -I E:\emb_workspace\LEHome_zigb /
+//                          ee\Projects\zstack\Samples\SampleApp\CC2530DB\..\ /
+//                          ..\..\..\..\COMPONENTS\OSAL\INCLUDE\ -I           /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\STACK\AF\ -I E:\emb_workspace\LEHome_zigbee\Pro /
+//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
+//                          ..\..\COMPONENTS\STACK\NWK\ -I                    /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\STACK\SEC\ -I E:\emb_workspace\LEHome_zigbee\Pr /
+//                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\.. /
+//                          \..\..\COMPONENTS\STACK\SAPI\ -I                  /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\STACK\SYS\ -I E:\emb_workspace\LEHome_zigbee\Pr /
+//                          ojects\zstack\Samples\SampleApp\CC2530DB\..\..\.. /
+//                          \..\..\COMPONENTS\STACK\ZDO\ -I                   /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\ZMAC\F8W\ -I E:\emb_workspace\LEHome_zigbee\Pro /
+//                          jects\zstack\Samples\SampleApp\CC2530DB\..\..\..\ /
+//                          ..\..\COMPONENTS\ZMAC\ -I                         /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\SERVICES\SADDR\ -I E:\emb_workspace\LEHome_zigb /
+//                          ee\Projects\zstack\Samples\SampleApp\CC2530DB\..\ /
+//                          ..\..\..\..\COMPONENTS\SERVICES\SDATA\ -I         /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\MAC\INCLUDE\ -I E:\emb_workspace\LEHome_zigbee\ /
+//                          Projects\zstack\Samples\SampleApp\CC2530DB\..\..\ /
+//                          ..\..\..\COMPONENTS\MAC\HIGH_LEVEL\ -I            /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\MAC\LOW_LEVEL\srf04\ -I                         /
+//                          E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\..\..\..\..\..\COMPONENT /
+//                          S\MAC\LOW_LEVEL\srf04\SINGLE_CHIP\ -Ohz           /
 //                          --require_prototypes                              /
-//    List file          =  F:\baiduyundownload\第5章                         /
-//                          zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack /
-//                          -CC2530-2.3.0-1.4.0\Projects\zstack\Samples\Sampl /
-//                          eApp\CC2530DB\CoordinatorEB-Pro\List\hal_uart.s51 /
+//    List file          =  E:\emb_workspace\LEHome_zigbee\Projects\zstack\Sa /
+//                          mples\SampleApp\CC2530DB\CoordinatorEB-Pro\List\h /
+//                          al_uart.s51                                       /
 //                                                                            /
 //                                                                            /
 ///////////////////////////////////////////////////////////////////////////////
@@ -487,7 +440,7 @@ Hal_UART_RxBufLen   SYMBOL "Hal_UART_RxBufLen"
         FUNCTION ??osal_memset?relay,00H
         EXTERN dmaCh1234
 
-// F:\baiduyundownload\第5章 zigbee协议栈应用与组网\7.温湿度传感器DHT11\ZStack-CC2530-2.3.0-1.4.0\Components\hal\target\CC2530EB\hal_uart.c
+// E:\emb_workspace\LEHome_zigbee\Components\hal\target\CC2530EB\hal_uart.c
 //    1 /**************************************************************************************************
 //    2   Filename:       _hal_uart.c
 //    3   Revised:        $Date: 2009-06-12 09:16:43 -0700 (Fri, 12 Jun 2009) $
